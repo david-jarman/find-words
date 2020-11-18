@@ -19,9 +19,9 @@ namespace SpellingBee.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public string Get([FromBody]FindWordsBody findWordsBody)
         {
-            return "ayy";
+            return findWordsBody.PossibleLetters;
         }
     }
 }
