@@ -19,9 +19,9 @@ namespace SpellingBee.Controllers
         }
 
         [HttpGet]
-        public string Get([FromBody]FindWordsBody findWordsBody)
+        public string Get([FromQuery]string possibleLetters, [FromQuery]string mustInclude)
         {
-            return findWordsBody.PossibleLetters;
+            return $"Possible Letters: {possibleLetters}, Must include: {mustInclude}";
         }
     }
 }
