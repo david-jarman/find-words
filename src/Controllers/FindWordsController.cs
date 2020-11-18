@@ -8,20 +8,51 @@ using Microsoft.Extensions.Logging;
 namespace SpellingBee.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class FindWordsController : ControllerBase
     {
-        private readonly ILogger<FindWordsController> _logger;
+        private const int s_SmallestPossibleWordLength = 3;
 
-        public FindWordsController(ILogger<FindWordsController> logger)
+        private readonly ILogger<FindWordsController> _logger;
+        private readonly IEnumerable<string> _words;
+        private readonly int longestPossibleWordLength;
+
+        public FindWordsController(ILogger<FindWordsController> logger, IEnumerable<string> words)
         {
             _logger = logger;
+            _words = words;
+            longestPossibleWordLength = _words.Max(s => s.Length);
         }
 
         [HttpGet]
-        public string Get([FromQuery]string possibleLetters, [FromQuery]string mustInclude)
+        [Route("/FindWords")]
+        public IEnumerable<string> Get([FromQuery]string possibleLetters, [FromQuery]string mustInclude)
         {
-            return $"Possible Letters: {possibleLetters}, Must include: {mustInclude}";
+            // TODO: input validation
+            return FindWords(possibleLetters.ToCharArray().ToHashSet(), mustInclude[0]);
+        }
+
+        [HttpGet]
+        [Route("/FindPanagrams")]
+        public IEnumerable<string> FindPanagrams([FromQuery]string possibleLetters)
+        {
+            // TODO: input validation
+            return FindPanagrams(possibleLetters.ToCharArray().ToHashSet());
+        }
+
+        private IEnumerable<string> FindWords(ISet<char> possibleLetters, char mustInclude)
+        {
+            return this._words.Where(word =>
+            {
+                return word.Contains(mustInclude) && word.All(c => possibleLetters.Contains(c));
+            });
+        }
+
+        private IEnumerable<string> FindPanagrams(ISet<char> possibleLetters)
+        {
+            return this._words.Where(word =>
+            {
+                return possibleLetters.All(c => word.Contains(c)) && word.All(c => possibleLetters.Contains(c));
+            });
         }
     }
 }
