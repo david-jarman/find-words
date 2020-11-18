@@ -8,17 +8,13 @@ namespace SpellingBee.Controllers
     [ApiController]
     public class FindWordsController : ControllerBase
     {
-        private const int s_SmallestPossibleWordLength = 3;
-
         private readonly ILogger<FindWordsController> _logger;
         private readonly IEnumerable<string> _words;
-        private readonly int longestPossibleWordLength;
 
         public FindWordsController(ILogger<FindWordsController> logger, IEnumerable<string> words)
         {
             _logger = logger;
             _words = words;
-            longestPossibleWordLength = _words.Max(s => s.Length);
         }
 
         [HttpGet]
