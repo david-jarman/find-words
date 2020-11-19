@@ -31,7 +31,7 @@ namespace SpellingBee
             services.AddSingleton<IEnumerable<string>>(serviceProvider =>
             {
                 string[] words = File.ReadAllLines("words.txt");
-                return words.Where(words => words.Length > 3);
+                return words.Where(words => words.Length > 3).ToArray();
             });
         }
 

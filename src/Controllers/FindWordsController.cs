@@ -22,7 +22,7 @@ namespace SpellingBee.Controllers
         public IEnumerable<string> Get([FromQuery]string possibleLetters, [FromQuery]string mustInclude)
         {
             // TODO: input validation
-            return FindWords(possibleLetters.ToCharArray().ToHashSet(), mustInclude[0]);
+            return FindWords(possibleLetters.ToHashSet(), mustInclude[0]);
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace SpellingBee.Controllers
         public IEnumerable<string> FindPanagrams([FromQuery]string possibleLetters)
         {
             // TODO: input validation
-            return FindPanagrams(possibleLetters.ToCharArray().ToHashSet());
+            return FindPanagrams(possibleLetters.ToHashSet());
         }
 
         private IEnumerable<string> FindWords(ISet<char> possibleLetters, char mustInclude)
