@@ -1,9 +1,10 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+ARG PORT=5000
 WORKDIR /app
-EXPOSE 5000
-ENV ASPNETCORE_URLS=http://*:5000
+EXPOSE $PORT
+ENV ASPNETCORE_URLS=http://*:$PORT
 
-FROM curlimages/curl AS deps
+FROM curlimages/curl:latest AS deps
 WORKDIR /deps
 RUN curl -o words.txt https://raw.githubusercontent.com/dwyl/english-words/7cb484da5de560c11109c8f3925565966015e5a9/words_alpha.txt
 
