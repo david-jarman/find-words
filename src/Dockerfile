@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 ARG PORT=5000
 WORKDIR /app
 EXPOSE $PORT
-ENV ASPNETCORE_URLS=http://*:$PORT
+ENV ASPNETCORE_URLS=https://*:$PORT
 
 FROM curlimages/curl:latest AS deps
 WORKDIR /deps
